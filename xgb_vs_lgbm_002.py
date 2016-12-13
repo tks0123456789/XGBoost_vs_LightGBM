@@ -62,30 +62,31 @@ params_lgb = {'task':'train', 'objective':'binary', 'learning_rate':0.1, 'lambda
 params = []
 times = []
 n_classes = 2
-class_sep = 1
 n_valid = 500000
 n_rounds = 13
 fname_header = "exp002_"
 for n_train in [10**5, 5*10**5]:#, 10**6, 10**7]:
-    n_all = n_train + n_valid
-    X, y = make_classification(n_samples=n_all, n_classes=n_classes,
-                               n_features=28, n_informative=20, n_redundant=5,
-                               class_sep=class_sep, shuffle=True, random_state=123)
-    for max_depth in [5, 10, 15]:
-        fname_footer = "n_train_%d_max_depth_%d.csv" % (n_train, max_depth)
-        params_xgb['max_depth'] = max_depth
-        params_lgb['max_depth'] = max_depth + 1
-        params_lgb['num_leaves'] = 2 ** max_depth
-        params.append({'n_train':n_train, 'max_depth':max_depth})
-        print(params[-1])
-        time_sec_lst = experiment_binary(X[:n_train], y[:n_train], X[-n_valid:], y[-n_valid:],
-                                         params_xgb, params_lgb, n_rounds=n_rounds,
-                                         fname_header=fname_header, fname_footer=fname_footer,
-                                         n_skip=4)
-        times.append(time_sec_lst)
+    for class_sep in [1.2, 1.4]:
+        n_all = n_train + n_valid
+        X, y = make_classification(n_samples=n_all, n_classes=n_classes,
+                                   n_features=28, n_informative=20, n_redundant=5,
+                                   class_sep=class_sep, shuffle=True, random_state=123)
+        for max_depth in [5, 10, 15]:
+            fname_footer = "n_train_%d_max_depth_%d.csv" % (n_train, max_depth)
+            params_xgb['max_depth'] = max_depth
+            params_lgb['max_depth'] = max_depth + 1
+            params_lgb['num_leaves'] = 2 ** max_depth
+            params.append({'n_train':n_train, 'class_sep':class_sep, 'max_depth':max_depth})
+            print('\n')
+            print(params[-1])
+            time_sec_lst = experiment_binary(X[:n_train], y[:n_train], X[-n_valid:], y[-n_valid:],
+                                             params_xgb, params_lgb, n_rounds=n_rounds,
+                                             fname_header=fname_header, fname_footer=fname_footer,
+                                             n_skip=4)
+            times.append(time_sec_lst)
 
 pd.set_option('display.precision', 1)
 print("\n\nTime")
-print(pd.DataFrame(times, columns=['XGB_CPU', 'XGB_GPU', 'LGBM']).join(pd.DataFrame(params)).set_index(['n_train', 'max_depth']))
+print(pd.DataFrame(times, columns=['XGB_CPU', 'XGB_GPU', 'LGBM']).join(pd.DataFrame(params)).set_index(['n_train', 'class_sep', 'max_depth']))
 
 print ("\nDone: %s seconds" % (str(time.time() - time_begin)))

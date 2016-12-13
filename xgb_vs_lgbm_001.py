@@ -1,8 +1,10 @@
 """
-Comparison btw XGB:CPU, XGB:GPU, and LightGBM on Higgs data
-exp name: exp001
-fname   : xgb_vs_lgbm_001.py
 2016/12/13 7.3h
+exp name  : exp001
+desciption: Comparison btw XGB:CPU, XGB:GPU, and LightGBM on Higgs data
+fname     : xgb_vs_lgbm_001.py
+env       : i7 4790k, 32G, GTX1070, ubuntu 14.04.4LTS
+result    : AUC, Feature importance, Leaf counts, Time
 params:
   n_rounds : 100
   n_train  : 10**5, 10**6, 10**7
