@@ -41,6 +41,7 @@ time_begin = time.time()
 from utility import experiment_binary
 from data_path import data_path
 
+# https://archive.ics.uci.edu/ml/datasets/HIGGS
 dtrain = pd.read_csv(data_path+'HIGGS.csv', header=None).values
 print ('finish loading from csv ')
 
