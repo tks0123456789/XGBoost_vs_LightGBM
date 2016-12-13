@@ -9,6 +9,9 @@ def experiment_binary(X_train, y_train, X_valid, y_valid,
                       params_xgb, params_lgb, n_rounds=10,
                       fname_header=None, fname_footer=None, n_skip=10):
     t000 = time.time()
+
+    metric = params_xgb['eval_metric']
+
     df_score_train = pd.DataFrame(index=range(n_rounds))
     df_score_valid = pd.DataFrame(index=range(n_rounds))
     feature_names = ['f%d' % i for i in range(X_train.shape[1])]
@@ -23,30 +26,30 @@ def experiment_binary(X_train, y_train, X_valid, y_valid,
 
     # XGB:CPU
     params_xgb['updater'] = 'grow_colmaker'
-    evals_result = {}
     print("training xgboost - cpu tree construction")
+    evals_result = {}
     t0 = time.time()
     bst = xgb.train(params_xgb, xgmat_train, n_rounds, watchlist,
                     evals_result=evals_result, verbose_eval=False)
     time_sec_lst.append(time.time() - t0)
     print("XGBoost CPU: %s seconds" % (str(time_sec_lst[-1])))
-    df_score_train['XGB_CPU'] = evals_result['train']['auc']
-    df_score_valid['XGB_CPU'] = evals_result['valid']['auc']
+    df_score_train['XGB_CPU'] = evals_result['train'][metric]
+    df_score_valid['XGB_CPU'] = evals_result['valid'][metric]
     feat_imps_dict['XGB_CPU'] = pd.Series(bst.get_score(importance_type='gain'), index=feature_names)
     dmp = bst.get_dump()
     leaf_cnts_dict['XGB_CPU'] = [tree.count('leaf') for tree in dmp]
 
     # XGB:GPU
     params_xgb['updater'] = 'grow_gpu'
-    evals_result = {}
     print("training xgboost - gpu tree construction")
+    evals_result = {}
     t0 = time.time()
     bst = xgb.train(params_xgb, xgmat_train, n_rounds, watchlist,
                     evals_result=evals_result, verbose_eval=False)
     time_sec_lst.append(time.time() - t0)
     print("XGBoost GPU: %s seconds" % (str(time_sec_lst[-1])))
-    df_score_train['XGB_GPU'] = evals_result['train']['auc']
-    df_score_valid['XGB_GPU'] = evals_result['valid']['auc']
+    df_score_train['XGB_GPU'] = evals_result['train'][metric]
+    df_score_valid['XGB_GPU'] = evals_result['valid'][metric]
     feat_imps_dict['XGB_GPU'] = pd.Series(bst.get_score(importance_type='gain'), index=feature_names)
     dmp = bst.get_dump()
     leaf_cnts_dict['XGB_GPU'] = [tree.count('leaf') for tree in dmp]
@@ -62,14 +65,13 @@ def experiment_binary(X_train, y_train, X_valid, y_valid,
                     valid_sets=watchlist, evals_result=evals_result, verbose_eval=False)
     time_sec_lst.append(time.time() - t0)
     print ("LightGBM: %s seconds" % (str(time_sec_lst[-1])))
-    df_score_train['LGBM'] = evals_result['training']['auc']
-    df_score_valid['LGBM'] = evals_result['valid_1']['auc']
+    df_score_train['LGBM'] = evals_result['training'][metric]
+    df_score_valid['LGBM'] = evals_result['valid_1'][metric]
     feat_imps_dict['LGBM'] = gbm.feature_importance("gain")
     model_json = gbm.dump_model()
     tree_lst = [str(tree['tree_structure']) for tree in model_json['tree_info']]
     leaf_cnts_dict['LGBM'] = [tree.count('leaf_value') for tree in tree_lst]
 
-    metric = params_xgb['eval_metric']
     print('\n%s train' % metric)
     print(df_score_train.iloc[::n_skip,])
     print('\n%s valid' % metric)
@@ -84,7 +86,7 @@ def experiment_binary(X_train, y_train, X_valid, y_valid,
                                 columns=['XGB_CPU', 'XGB_GPU', 'LGBM']).fillna(0)
     df_feat_imps /= df_feat_imps.sum(0)
     df_feat_imps = df_feat_imps.sort_values('XGB_CPU', ascending=False)
-    print('\nFeature importance')
+    print('\nFeature importance sorted by XGB_CPU') # added sorted by XGB_CPU after exp001
     print(df_feat_imps.head(5))
     if fname_header is not None:
         df_score_train.to_csv('log/' + fname_header + 'Score_Train_' + fname_footer)
