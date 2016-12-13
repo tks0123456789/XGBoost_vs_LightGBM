@@ -1,5 +1,5 @@
 """
-2016/12/13-14 not done
+2016/12/13-14 8.9h
 exp name  : exp002
 desciption: Comparison btw XGB:CPU, XGB:GPU, and LightGBM on arificial datasets
 fname     : xgb_vs_lgbm_001.py
@@ -21,6 +21,29 @@ params_lgb = {'task':'train', 'objective':'binary', 'learning_rate':0.1, 'lambda
               'verbose' : 0,
               'max_depth': max_depth+1, 'num_leaves' : 2**max_depth}
 
+Time
+                                         XGB_CPU  XGB_GPU   LGBM
+n_train  n_clusters_per_class max_depth                         
+100000   8                    5             20.9      7.3    0.7
+                              10            37.8      9.1    1.8
+                              15            53.9     11.7   13.9
+         64                   5             20.2      6.9    0.7
+                              10            37.5      8.9    1.8
+                              15            54.9     11.6   15.1
+1000000  8                    5            178.5     29.5    3.2
+                              10           362.4     43.9    9.0
+                              15           561.6     57.1   47.2
+         64                   5            177.1     29.4    3.0
+                              10           370.4     43.5    7.9
+                              15           560.1     57.8   55.8
+10000000 8                    5           1973.1    234.4   27.3
+                              10          4229.9    366.6   76.1
+                              15          6795.7    486.8  217.7
+         64                   5           1942.7    233.4   26.8
+                              10          4255.1    364.0   72.4
+                              15          6792.2    489.3  233.4
+
+Done: 32055.524188 seconds
 
 """
 import pandas as pd
@@ -67,7 +90,7 @@ for n_train in [10**5, 10**6, 10**7]:
                                              n_skip=15)
             times.append(time_sec_lst)
 
-pd.set_option('display.precision', 2)
+pd.set_option('display.precision', 1)
 print("\n\nTime")
 print(pd.DataFrame(times, columns=['XGB_CPU', 'XGB_GPU', 'LGBM']).join(pd.DataFrame(params)).set_index(['n_train', 'n_clusters_per_class', 'max_depth']))
 
