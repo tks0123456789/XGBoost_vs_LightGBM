@@ -10,16 +10,6 @@ params:
   n_train  : 10**5, 10**6, 10**7
   max_depth: 5, 10, 15
 
-The objective function of LGBM for binary classification is slightly different from XGB's.
-LGBM: -log(1+exp(-2 * sigmoid * label * score))
-XGB : -log(1+exp(-label * score))
-  label in {-1, 1}
-  score : leaf values
-  The default value of sigmoid is 1.0.
-So LGBM's parameter sigmoid is set to 0.5.
-
-LGBM's max_depth is not the maximum depth of a tree, max_depth + 1 !!!
-
 params_xgb = {'objective':'binary:logistic', 'eta':0.1, 'lambda':1,
               'eval_metric':'auc', 'tree_method':'exact', 'threads':8,
               'max_depth':max_depth}
