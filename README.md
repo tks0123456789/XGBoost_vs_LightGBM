@@ -1,5 +1,5 @@
-# All the timings of XGB_CPU are incorrect.
-# Building xgboost with gpu enabled may slow XGB_CPU
+# All the timings of XGBoost are invalid.
+# I might incorrectly built xgboost.
 
 ### Comparison of XGB:[2b6aa77](https://github.com/dmlc/xgboost/tree/2b6aa7736febbad5243e4335be0640cd659d3ce5) and LGBM:[ebfc852](https://github.com/Microsoft/LightGBM/tree/ebfc8521e217204f47cb53843bd56cf2c2395ffb)
 
