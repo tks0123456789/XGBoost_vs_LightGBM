@@ -15,7 +15,7 @@ params:
 The limit of updater_gpu:max_depth is 15.
 xgboost.core.XGBoostError: [12:45:46] /home/tks/download/xgboost/plugin/updater_gpu/src/gpu_builder.cu:157: Check failed: param.max_depth < 16 Tree depth too large.
 
-Time
+Time(sec)
                       XGB_CPU  XGB_GPU  LGBM
 n_features max_depth                        
 30         5            176.7     29.8   3.3
@@ -104,7 +104,7 @@ df_time = pd.DataFrame(times, columns=['XGB_CPU', 'XGB_GPU', 'LGBM']).join(pd.Da
 df_time.to_csv("log/" + fname_header + "time.csv")
 
 pd.set_option('display.precision', 1)
-print("\n\nTime")
+print("\n\nTime(sec)")
 print(df_time.set_index(['n_features', 'max_depth']))
 
 print ("\nDone: %s seconds" % (str(time.time() - time_begin)))

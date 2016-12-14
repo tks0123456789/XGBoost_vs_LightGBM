@@ -21,7 +21,7 @@ params_lgb = {'task':'train', 'objective':'binary', 'learning_rate':0.1, 'lambda
               'verbose' : 0,
               'max_depth': max_depth+1, 'num_leaves' : 2**max_depth}
 
-Time
+Time(sec)
                                          XGB_CPU  XGB_GPU   LGBM
 n_train  n_clusters_per_class max_depth                         
 100000   8                    5             20.9      7.3    0.7
@@ -91,7 +91,7 @@ for n_train in [10**5, 10**6, 10**7]:
             times.append(time_sec_lst)
 
 pd.set_option('display.precision', 1)
-print("\n\nTime")
+print("\n\nTime(sec)")
 print(pd.DataFrame(times, columns=['XGB_CPU', 'XGB_GPU', 'LGBM']).join(pd.DataFrame(params)).set_index(['n_train', 'n_clusters_per_class', 'max_depth']))
 
 print ("\nDone: %s seconds" % (str(time.time() - time_begin)))
