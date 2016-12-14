@@ -10,16 +10,18 @@ So LGBM's parameter sigmoid is set to 0.5.
 
 LGBM's max_depth is not the maximum depth of a tree, **maximum depth + 1** !!!
 
-* exp001:[Higgs dataset](https://archive.ics.uci.edu/ml/datasets/HIGGS)
+* exp001: [Higgs dataset](https://archive.ics.uci.edu/ml/datasets/HIGGS)
   * n_train              : 10^5, 10^6, 10^7
   * n_features           : 28
   * max_depth            : 5, 10, 15
-* exp002:Artificial datasets
+
+* exp002: Artificial datasets
   * n_train              : 10^5, 10^6, 10^7
   * n_features           : 28
   * max_depth            : 5, 10, 15
   * n_clusters_per_class : 8, 16
-* exp003:Partially obserbable artificial datasets
+
+* exp003: Partially obserbable artificial datasets
   * n_train              : 10^6
   * n_features_used      : 28
   * n_features           : 30, 50
