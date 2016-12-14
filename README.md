@@ -8,4 +8,4 @@ The objective function of LGBM for binary classification is slightly different f
 
 So LGBM's parameter sigmoid is set to 0.5.
 
-LGBM's max_depth is not the maximum depth of a tree, **max_depth + 1** !!!
+LGBM's max_depth is not the maximum depth of a tree, **maximum depth + 1** !!!
