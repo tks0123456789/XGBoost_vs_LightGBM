@@ -1,5 +1,5 @@
 """
-2016/12/13-14 8.9h
+2016/12/15 not done
 exp name  : exp005
 desciption: Comparison of XGB:CPU and LightGBM on arificial datasets
 fname     : exp005.py
