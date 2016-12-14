@@ -20,5 +20,5 @@ LGBM's max_depth is not the maximum depth of a tree, **maximum depth + 1** !!!
 * exp005: Artificial datasets
   * n_train              : 10^6, 2*10^6
   * n_features           : 28
-  * n_clusters_per_class : 8
+  * n_clusters_per_class : 64
   * max_depth            : 5, 10,11,..,16
