@@ -72,7 +72,7 @@ n_clusters_per_class = 64
 n_rounds = 100
 fname_header = "exp005_"
 
-for n_train in [10**4, 2*10**4]:
+for n_train in [10**6, 2*10**6]:
     n_all = n_train + n_valid
     X, y = make_classification(n_samples=n_all, n_classes=n_classes, n_features=28,
                                n_informative=10, n_redundant=10,
@@ -84,7 +84,7 @@ for n_train in [10**4, 2*10**4]:
         params_lgb['max_depth'] = max_depth + 1
         params_lgb['num_leaves'] = 2 ** max_depth
         params.append({'n_train':n_train, 'max_depth':max_depth})
-        print('')
+        print('\n')
         print(params[-1])
         time_sec_lst = experiment_binary(X[:n_train], y[:n_train], X[-n_valid:], y[-n_valid:],
                                          params_xgb, params_lgb, n_rounds=n_rounds,
@@ -94,17 +94,13 @@ for n_train in [10**4, 2*10**4]:
         times.append(time_sec_lst)
 
 df_time = pd.DataFrame(times, columns=['XGB_CPU', 'LGBM']).join(pd.DataFrame(params))
+df_time['XGB_CPU/LGB'] = df_time['XGB_CPU'] / df_time['LGBM']
 df_time.set_index(['n_train', 'max_depth'], inplace=True)
+df_time.columns = pd.MultiIndex(levels=[['Time(sec)', 'Ratio'],[df_time.columns]],
+                                labels=[[0,0,1,],[0,1,2]])
 df_time.to_csv('log/' + fname_header + 'time.csv')
 
-print("\n\nTime(sec)")
 pd.set_option('display.precision', 1)
-print(df_time)
-
-print('\nRatio')
-df_time['XGB_CPU'] /= df_time['LGBM']
-df_time['LGBM'] = 1
-pd.set_option('display.precision', 2)
 print(df_time)
 
 print ("\nDone: %s seconds" % (str(time.time() - time_begin)))
