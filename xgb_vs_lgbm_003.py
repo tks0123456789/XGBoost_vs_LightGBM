@@ -1,5 +1,5 @@
 """
-2016/12/14 not done
+2016/12/14 2.7h
 exp name  : exp003
 desciption: Comparison btw XGB:CPU, XGB:GPU, and LightGBM on partially observable arificial datasets
 fname     : xgb_vs_lgbm_003.py
@@ -8,11 +8,38 @@ result    : logloss, Feature importance, Leaf counts, Time
 params:
   n_rounds            : 50
   n_train             : 1000000
-  n_features          : 30, 50
+  # 28 out of n_features are used
+  n_features          : 30, 50 
   max_depth           : 5,6,7, .., 15
 
 The limit of updater_gpu:max_depth is 15.
 xgboost.core.XGBoostError: [12:45:46] /home/tks/download/xgboost/plugin/updater_gpu/src/gpu_builder.cu:157: Check failed: param.max_depth < 16 Tree depth too large.
+
+Time
+                      XGB_CPU  XGB_GPU  LGBM
+n_features max_depth                        
+30         5            176.7     29.8   3.3
+           6            211.6     32.8   4.1
+           7            246.6     36.2   5.2
+           8            284.5     38.7   6.3
+           9            325.1     40.8   8.0
+           10           363.1     43.7   9.7
+           11           401.9     46.3  12.5
+           12           442.0     48.4  16.4
+           13           479.5     51.3  23.9
+           14           524.7     54.5  39.1
+           15           552.8     57.1  72.2
+50         5            174.8     29.5   3.4
+           6            213.9     32.9   4.1
+           7            250.4     35.4   5.2
+           8            288.0     38.2   6.5
+           9            325.9     40.7   7.9
+           10           362.7     43.4   9.8
+           11           405.8     46.0  12.9
+           12           442.7     48.5  16.2
+           13           479.4     51.2  23.6
+           14           518.9     54.7  38.7
+           15           558.1     57.8  75.2
 
 params_xgb = {'objective':'binary:logistic', 'eta':0.1, 'lambda':1,
               'eval_metric':'logloss', 'tree_method':'exact', 'threads':8,
@@ -23,30 +50,6 @@ params_lgb = {'task':'train', 'objective':'binary', 'learning_rate':0.1, 'lambda
               'min_data_in_leaf': 1, 'min_sum_hessian_in_leaf': 1,
               'verbose' : 0,
               'max_depth': max_depth+1, 'num_leaves' : 2**max_depth}
-
-Time
-                                         XGB_CPU  XGB_GPU   LGBM
-n_train  n_clusters_per_class max_depth                         
-100000   8                    5             20.9      7.3    0.7
-                              10            37.8      9.1    1.8
-                              15            53.9     11.7   13.9
-         64                   5             20.2      6.9    0.7
-                              10            37.5      8.9    1.8
-                              15            54.9     11.6   15.1
-1000000  8                    5            178.5     29.5    3.2
-                              10           362.4     43.9    9.0
-                              15           561.6     57.1   47.2
-         64                   5            177.1     29.4    3.0
-                              10           370.4     43.5    7.9
-                              15           560.1     57.8   55.8
-10000000 8                    5           1973.1    234.4   27.3
-                              10          4229.9    366.6   76.1
-                              15          6795.7    486.8  217.7
-         64                   5           1942.7    233.4   26.8
-                              10          4255.1    364.0   72.4
-                              15          6792.2    489.3  233.4
-
-Done: 32055.524188 seconds
 
 """
 import pandas as pd
