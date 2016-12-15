@@ -10,7 +10,7 @@ params:
   n_features          : 28
   n_rounds            : 100
   n_clusters_per_class: 64
-  max_depth-1         : no limit, [11,13,15], 20
+  max_depth-1         : no limit, log2(num_leaves), 8, 18
   num_leaves          : 2**11, 2**13, 2**15
 
                               no_depth_limit  depth  depth_8  depth_18
