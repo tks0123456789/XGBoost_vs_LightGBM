@@ -13,16 +13,6 @@ params:
   max_depth-1         : no limit, [11,13,15], 20
   num_leaves          : 2**11, 2**13, 2**15
 
-params_xgb = {'objective':'binary:logistic', 'eta':0.1, 'lambda':1,
-              'eval_metric':'logloss', 'tree_method':'exact', 'threads':8,
-              'max_depth':max_depth}
-
-params_lgb = {'task':'train', 'objective':'binary', 'learning_rate':0.1, 'lambda_l2':1,
-              'metric' : {'binary_logloss'}, 'sigmoid': 0.5, 'num_threads':8,
-              'min_data_in_leaf': 1, 'min_sum_hessian_in_leaf': 1,
-              'verbose' : 0,
-              'max_depth': max_depth+1, 'num_leaves' : 2**max_depth}
-
                               no_depth_limit  depth  depth_8  depth_18
 n_train num_leaves max_depth                                          
 1000000 2048       12                   29.5   17.1      8.9      27.0
