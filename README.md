@@ -10,9 +10,11 @@ So LGBM's parameter sigmoid is set to 0.5.
 
 * LightGBM.ipynb: Modified version of [marugari's work](https://github.com/marugari/Notebooks/blob/ed6aa7835579ce9143850ed5956912895c984d56/LightGBM.ipynb)
 
+
 * exp004: [Higgs dataset](https://archive.ics.uci.edu/ml/datasets/HIGGS)
-  * n_train              : 0.1M, 1M, 10M
+  * n_train              : 10K, 0.1M, 1M, 10M
   * n_features           : 28
+  * n_rounds             : 500
   * max_depth            : 5, 10, 15
 * exp005: Artificial datasets
   * n_train              : 1M, 2M
@@ -23,5 +25,5 @@ So LGBM's parameter sigmoid is set to 0.5.
   * n_train              : 1M, 2M, 4M
   * n_features           : 28
   * max_depth-1          : no limit, log2(num_leaves), 8, 18
-  * num_leaves           : 2**11, 2**13, 2**15
+  * num_leaves           : 2^11, 2^13, 2^15
 
