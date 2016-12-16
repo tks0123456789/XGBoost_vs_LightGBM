@@ -79,7 +79,7 @@ for n_train in [10**6, 2*10**6]:
     for max_depth in [5, 10,11,12,13,14,15,16]:
         fname_footer = "n_train_%d_max_depth_%d.csv" % (n_train, max_depth)
         params_xgb['max_depth'] = max_depth
-        params_lgb['max_depth'] = max_depth + 1
+        params_lgb['max_depth'] = max_depth
         params_lgb['num_leaves'] = 2 ** max_depth
         params.append({'n_train':n_train, 'max_depth':max_depth})
         print('\n')
