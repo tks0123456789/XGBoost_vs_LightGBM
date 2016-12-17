@@ -1,5 +1,5 @@
 """
-2016/12/17 not done
+2016/12/17 1.9h
 exp name  : exp005
 desciption: Comparison of XGB:CPU and LightGBM on arificial datasets
 fname     : exp005.py
@@ -13,6 +13,26 @@ params:
   n_rounds            : 100
   n_clusters_per_class: 64
   max_depth           : 5, 10,11,12,13,14,15,16
+
+                  Time(sec)              Ratio
+                    XGB_CPU    LGB XGB_CPU/LGB
+n_train max_depth                             
+1000000 5              76.2    4.8        16.0
+        10            161.0   12.8        12.5
+        11            179.3   16.1        11.1
+        12            193.0   21.4         9.0
+        13            209.4   29.7         7.0
+        14            230.8   44.7         5.2
+        15            243.2   80.9         3.0
+        16            264.3  163.7         1.6
+2000000 5             207.7    9.6        21.7
+        10            443.3   25.1        17.7
+        11            464.7   29.6        15.7
+        12            496.5   38.3        13.0
+        13            537.8   50.7        10.6
+        14            582.0   72.2         8.1
+        15            629.2  123.3         5.1
+        16            676.1  236.3         2.9
 
 """
 import pandas as pd
