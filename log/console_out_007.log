@@ -1,0 +1,464 @@
+finish loading from csv 
+{'n_train': 10000, 'max_depth': 5}
+training xgboost - cpu tree construction
+XGBoost CPU: 7.53913903236 seconds
+training LightGBM
+LightGBM: 3.68138313293 seconds
+
+logloss train
+          XGB       LGB
+0    0.674476  0.674870
+100  0.429485  0.424890
+200  0.361000  0.348448
+300  0.305440  0.286757
+400  0.260286  0.235997
+
+logloss valid
+          XGB       LGB
+0    0.677451  0.677621
+100  0.555893  0.555494
+200  0.558625  0.558082
+300  0.562951  0.564032
+400  0.569009  0.571568
+
+Leaf counts
+     XGB  LGB
+0     29   29
+100   17   17
+200   25   19
+300    6   20
+400   28   32
+
+Feature importance sorted by XGB
+          XGB       LGB
+f25  0.096771  0.140139
+f27  0.068202  0.076838
+f26  0.061635  0.064314
+f22  0.052261  0.055868
+f5   0.051827  0.063985
+{'n_train': 10000, 'max_depth': 10}
+training xgboost - cpu tree construction
+XGBoost CPU: 9.68844604492 seconds
+training LightGBM
+LightGBM: 7.07903504372 seconds
+
+logloss train
+          XGB       LGB
+0    0.652132  0.652540
+100  0.109822  0.101137
+200  0.047740  0.041606
+300  0.025919  0.021511
+400  0.016354  0.013921
+
+logloss valid
+          XGB       LGB
+0    0.673269  0.673823
+100  0.577106  0.581792
+200  0.607013  0.616808
+300  0.637884  0.651816
+400  0.665587  0.679769
+
+Leaf counts
+     XGB  LGB
+0    387  398
+100  160  139
+200  170   96
+300   95   70
+400   77   61
+
+Feature importance sorted by XGB
+          XGB       LGB
+f25  0.085644  0.117194
+f27  0.064454  0.064695
+f26  0.056806  0.055700
+f24  0.048598  0.058370
+f5   0.046080  0.055878
+{'n_train': 10000, 'max_depth': 15}
+training xgboost - cpu tree construction
+XGBoost CPU: 10.9185237885 seconds
+training LightGBM
+LightGBM: 14.9744660854 seconds
+
+logloss train
+          XGB       LGB
+0    0.636630  0.639323
+100  0.036528  0.036390
+200  0.016310  0.016477
+300  0.010418  0.010574
+400  0.007725  0.007891
+
+logloss valid
+          XGB       LGB
+0    0.673841  0.674024
+100  0.615253  0.616590
+200  0.655595  0.658550
+300  0.684220  0.687043
+400  0.705815  0.708605
+
+Leaf counts
+     XGB  LGB
+0    863  798
+100  148  225
+200  109  114
+300   75   73
+400   53   58
+
+Feature importance sorted by XGB
+          XGB       LGB
+f25  0.093226  0.121328
+f27  0.063219  0.065523
+f26  0.056725  0.055532
+f24  0.049763  0.056573
+f5   0.047128  0.053906
+{'n_train': 100000, 'max_depth': 5}
+training xgboost - cpu tree construction
+XGBoost CPU: 24.23960495 seconds
+training LightGBM
+LightGBM: 5.13233685493 seconds
+
+logloss train
+          XGB       LGB
+0    0.677288  0.677382
+100  0.517818  0.519524
+200  0.498371  0.496137
+300  0.484064  0.477140
+400  0.471640  0.460641
+
+logloss valid
+          XGB       LGB
+0    0.677507  0.677539
+100  0.536107  0.536731
+200  0.531087  0.530407
+300  0.529705  0.527906
+400  0.529373  0.527042
+
+Leaf counts
+     XGB  LGB
+0     32   32
+100   18   32
+200   24   30
+300   10   26
+400   32   32
+
+Feature importance sorted by XGB
+          XGB       LGB
+f25  0.155403  0.234091
+f27  0.105738  0.118223
+f26  0.081647  0.079700
+f22  0.070352  0.073631
+f5   0.065346  0.073093
+{'n_train': 100000, 'max_depth': 10}
+training xgboost - cpu tree construction
+XGBoost CPU: 48.4872980118 seconds
+training LightGBM
+LightGBM: 12.7809519768 seconds
+
+logloss train
+          XGB       LGB
+0    0.666219  0.666595
+100  0.341147  0.325870
+200  0.284309  0.234790
+300  0.224811  0.168552
+400  0.186847  0.119487
+
+logloss valid
+          XGB       LGB
+0    0.671252  0.671472
+100  0.527311  0.526873
+200  0.528490  0.529448
+300  0.531039  0.535050
+400  0.534444  0.543141
+
+Leaf counts
+     XGB  LGB
+0    803  805
+100  223  568
+200  202  563
+300  214  379
+400  273  545
+
+Feature importance sorted by XGB
+          XGB       LGB
+f25  0.097336  0.118576
+f27  0.069159  0.069520
+f26  0.058505  0.056789
+f24  0.049291  0.054935
+f22  0.048789  0.053119
+{'n_train': 100000, 'max_depth': 15}
+training xgboost - cpu tree construction
+XGBoost CPU: 78.7140130997 seconds
+training LightGBM
+LightGBM: 90.8034250736 seconds
+
+logloss train
+          XGB       LGB
+0    0.648053  0.648670
+100  0.089203  0.076304
+200  0.040482  0.029713
+300  0.022899  0.017612
+400  0.016412  0.012061
+
+logloss valid
+          XGB       LGB
+0    0.670236  0.670249
+100  0.546821  0.550835
+200  0.568971  0.580753
+300  0.591445  0.604366
+400  0.607077  0.623765
+
+Leaf counts
+      XGB   LGB
+0    4574  4630
+100  1946  1656
+200  1324   647
+300   755   372
+400   803   320
+
+Feature importance sorted by XGB
+          XGB       LGB
+f25  0.092423  0.111079
+f27  0.064423  0.065009
+f26  0.055134  0.054001
+f24  0.048057  0.054535
+f5   0.045562  0.053552
+{'n_train': 1000000, 'max_depth': 5}
+training xgboost - cpu tree construction
+XGBoost CPU: 288.722772121 seconds
+training LightGBM
+LightGBM: 24.426748991 seconds
+
+logloss train
+          XGB       LGB
+0    0.677665  0.677659
+100  0.530762  0.531908
+200  0.519495  0.519223
+300  0.512934  0.512531
+400  0.508558  0.507135
+
+logloss valid
+          XGB       LGB
+0    0.677681  0.677669
+100  0.533335  0.534002
+200  0.524000  0.523206
+300  0.519279  0.518306
+400  0.516642  0.514696
+
+Leaf counts
+     XGB  LGB
+0     32   32
+100   32   32
+200   30   32
+300   32   32
+400   32   32
+
+Feature importance sorted by XGB
+          XGB       LGB
+f25  0.170630  0.295146
+f27  0.122091  0.138449
+f26  0.092923  0.090768
+f22  0.082862  0.085545
+f5   0.072811  0.081384
+{'n_train': 1000000, 'max_depth': 10}
+training xgboost - cpu tree construction
+XGBoost CPU: 571.078689098 seconds
+training LightGBM
+LightGBM: 62.1300098896 seconds
+
+logloss train
+          XGB       LGB
+0    0.670026  0.670118
+100  0.458827  0.460126
+200  0.432665  0.421836
+300  0.414001  0.391279
+400  0.397552  0.365186
+
+logloss valid
+          XGB       LGB
+0    0.670789  0.670823
+100  0.506488  0.506273
+200  0.502195  0.500100
+300  0.500551  0.497901
+400  0.499745  0.497407
+
+Leaf counts
+     XGB  LGB
+0    943  953
+100  498  520
+200  476  585
+300  602  391
+400  186  603
+
+Feature importance sorted by XGB
+          XGB       LGB
+f25  0.146752  0.176261
+f27  0.089838  0.093659
+f26  0.071480  0.069135
+f24  0.058900  0.068014
+f22  0.057660  0.060632
+{'n_train': 1000000, 'max_depth': 15}
+training xgboost - cpu tree construction
+XGBoost CPU: 912.792859077 seconds
+training LightGBM
+LightGBM: 380.947607994 seconds
+
+logloss train
+          XGB       LGB
+0    0.659955  0.660248
+100  0.264985  0.260027
+200  0.218407  0.175209
+300  0.184700  0.106510
+400  0.149716  0.064255
+
+logloss valid
+          XGB       LGB
+0    0.667676  0.667722
+100  0.505220  0.505224
+200  0.504581  0.507218
+300  0.505998  0.514675
+400  0.508401  0.526328
+
+Leaf counts
+       XGB    LGB
+0    13296  13697
+100    418   4552
+200   1234   3931
+300   4239   2523
+400   1196   3164
+
+Feature importance sorted by XGB
+          XGB       LGB
+f25  0.100172  0.113029
+f27  0.068899  0.067297
+f26  0.056600  0.053894
+f24  0.049740  0.056551
+f22  0.047197  0.051599
+{'n_train': 10000000, 'max_depth': 5}
+training xgboost - cpu tree construction
+XGBoost CPU: 5597.50094795 seconds
+training LightGBM
+LightGBM: 229.79380393 seconds
+
+logloss train
+          XGB       LGB
+0    0.677602  0.677589
+100  0.533706  0.533379
+200  0.523287  0.522885
+300  0.517754  0.517288
+400  0.513754  0.513171
+
+logloss valid
+          XGB       LGB
+0    0.677606  0.677591
+100  0.534137  0.533563
+200  0.523886  0.523241
+300  0.518568  0.517732
+400  0.514730  0.513777
+
+Leaf counts
+     XGB  LGB
+0     32   32
+100   32   32
+200   32   32
+300   32   32
+400   32   32
+
+Feature importance sorted by XGB
+          XGB       LGB
+f25  0.172056  0.302279
+f27  0.121219  0.140247
+f26  0.093413  0.092986
+f22  0.091568  0.088578
+f24  0.074665  0.077251
+{'n_train': 10000000, 'max_depth': 10}
+training xgboost - cpu tree construction
+XGBoost CPU: 12846.2814131 seconds
+training LightGBM
+LightGBM: 595.613898993 seconds
+
+logloss train
+          XGB       LGB
+0    0.670631  0.670662
+100  0.494456  0.494853
+200  0.479083  0.479078
+300  0.471548  0.468227
+400  0.463816  0.459813
+
+logloss valid
+          XGB       LGB
+0    0.670785  0.670775
+100  0.501778  0.501801
+200  0.491762  0.491652
+300  0.488044  0.486099
+400  0.484428  0.482591
+
+Leaf counts
+      XGB   LGB
+0    1016  1013
+100   964  1005
+200   521   889
+300   292   893
+400   936   841
+
+Feature importance sorted by XGB
+          XGB       LGB
+f25  0.169273  0.241048
+f27  0.108990  0.120431
+f26  0.078222  0.083942
+f22  0.068525  0.071234
+f24  0.064805  0.077756
+{'n_train': 10000000, 'max_depth': 15}
+training xgboost - cpu tree construction
+XGBoost CPU: 20664.675699 seconds
+training LightGBM
+LightGBM: 1523.49600697 seconds
+
+logloss train
+          XGB       LGB
+0    0.665273  0.665448
+100  0.401959  0.400338
+200  0.363047  0.355260
+300  0.344761  0.317561
+400  0.328051  0.289971
+
+logloss valid
+          XGB       LGB
+0    0.666868  0.666904
+100  0.482182  0.482064
+200  0.475465  0.474528
+300  0.472975  0.469578
+400  0.471212  0.467530
+
+Leaf counts
+       XGB    LGB
+0    23272  23404
+100   5832  12930
+200   1225   3853
+300   4762   6025
+400   2645  10146
+
+Feature importance sorted by XGB
+          XGB       LGB
+f25  0.130390  0.150729
+f27  0.082216  0.083705
+f26  0.064104  0.064371
+f8   0.058007  0.008514
+f24  0.053705  0.063382
+
+
+                   Time(sec)               Ratio
+                     XGB_CPU     LGB XGB_CPU/LGB
+n_train  max_depth                              
+10000    5               7.5     3.7         2.0
+         10              9.7     7.1         1.4
+         15             10.9    15.0         0.7
+100000   5              24.2     5.1         4.7
+         10             48.5    12.8         3.8
+         15             78.7    90.8         0.9
+1000000  5             288.7    24.4        11.8
+         10            571.1    62.1         9.2
+         15            912.8   380.9         2.4
+10000000 5            5597.5   229.8        24.4
+         10          12846.3   595.6        21.6
+         15          20664.7  1523.5        13.6
+
+Done: 44870.4617779 seconds
