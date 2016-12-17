@@ -92,7 +92,7 @@ def experiment_binary(X_train, y_train, X_valid, y_valid,
                                 columns=columns).fillna(0)
     df_feat_imps /= df_feat_imps.sum(0)
     df_feat_imps = df_feat_imps.sort_values('XGB', ascending=False)
-    print('\nFeature importance sorted by XGB') # added sorted by XGB after exp001
+    print('\nFeature importance(gain) sorted by XGB')
     print(df_feat_imps.head(5))
     if fname_header is not None:
         df_score_train.to_csv('log/' + fname_header + 'Score_Train_' + fname_footer)
@@ -216,6 +216,6 @@ def equal_frequency_binning(X, q=255, bins_lst=None):
             x_cut, bins = pd.qcut(x, q=q, retbins=retbins)
             bins_lst.append(bins)
         else:
-            x_cut = pd.qcut(x, q=bins_lst[i], retbins=retbins)
+            x_cut = pd.cut(x, bins=bins_lst[i], retbins=retbins)
         X_new.append(x_cut.codes)
     return np.column_stack(X_new), bins_lst
