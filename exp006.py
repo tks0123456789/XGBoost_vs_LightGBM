@@ -1,5 +1,5 @@
 """
-2016/12/18 not done
+2016/12/18 1.65h
 exp name  : exp006
 Objective : Does equal freq binning improve accuracy?
 desciption: Comparison of XGB:CPU and LightGBM on arificial datasets
@@ -15,6 +15,26 @@ params:
   n_rounds            : 100
   n_clusters_per_class: 64
   max_depth           : 5, 10,11,12,13,14,15,16
+
+                  Time(sec)              Ratio
+                    XGB_CPU    LGB XGB_CPU/LGB
+n_train max_depth                             
+1000000 5              52.7    4.9        10.8
+        10            114.4   13.1         8.8
+        11            126.9   15.7         8.1
+        12            133.2   20.8         6.4
+        13            138.7   29.7         4.7
+        14            155.9   45.8         3.4
+        15            178.2   81.3         2.2
+        16            191.9  159.5         1.2
+2000000 5             161.1    9.6        16.8
+        10            334.6   24.9        13.4
+        11            409.4   31.6        12.9
+        12            473.5   39.7        11.9
+        13            520.2   53.5         9.7
+        14            511.6   75.7         6.8
+        15            546.6  126.6         4.3
+        16            589.4  254.7         2.3
 
 """
 import pandas as pd
