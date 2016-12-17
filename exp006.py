@@ -48,9 +48,9 @@ for n_train in [10**6, 2*10**6]:
                                n_informative=10, n_redundant=10,
                                n_clusters_per_class=n_clusters_per_class,
                                shuffle=True, random_state=123)
-    X_train, bins_lst = equal_frequency_binning(X, q=255)
-    X_valid, bins_lst = equal_frequency_binning(X, bins_lst=bins_lst)
-    X_valid = X[n_train:]
+    X_train, bins_lst = equal_frequency_binning(X[:n_train], q=255)
+    X_valid, bins_lst = equal_frequency_binning(X[n_train:], bins_lst=bins_lst)
+    y_train = y[:n_train]
     y_valid = y[n_train:]
     for max_depth in [5, 10,11,12,13,14,15,16]:
         fname_footer = "n_train_%d_max_depth_%d.csv" % (n_train, max_depth)
