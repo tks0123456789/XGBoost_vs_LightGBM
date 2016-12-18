@@ -170,7 +170,7 @@ def experiment_binary_train(X_train, y_train,
     feat_imps_dict['XGB'] = pd.Series(bst.get_score(importance_type='gain'), index=feature_names)
     dmp = bst.get_dump()
     leaf_cnts_dict['XGB'] = [tree.count('leaf') for tree in dmp]
-    del xgbmat_train, bst, dmp
+    del xgmat_train, bst, dmp
 
     # LightGBM
     lgb_train = lgb.Dataset(X_train, y_train)
