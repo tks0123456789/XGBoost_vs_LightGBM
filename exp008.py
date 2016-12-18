@@ -1,5 +1,5 @@
 """
-2016/12/18 not done
+2016/12/18 12.4h
 exp name  : exp008
 desciption: Comparison XGB:CPU and LightGBM on Higgs data
           : Training only
@@ -10,6 +10,22 @@ params:
   n_rounds : 500
   n_train  : 10K, 0.1M, 1M, 10M
   max_depth: 5, 10, 15
+
+                   Time(sec)           Ratio
+                         XGB     LGB XGB/LGB
+n_train  max_depth                          
+10000    5               2.0     0.3     6.2
+         10              4.1     1.6     2.6
+         15              5.3     8.5     0.6
+100000   5              19.1     1.5    13.0
+         10             42.4     6.8     6.2
+         15             71.0    57.3     1.2
+1000000  5             277.2    18.3    15.1
+         10            634.3    53.5    11.9
+         15            997.8   370.3     2.7
+10000000 5            5543.9   199.3    27.8
+         10          12795.7   561.9    22.8
+         15          20575.2  1488.6    13.8
 
 """
 import pandas as pd
