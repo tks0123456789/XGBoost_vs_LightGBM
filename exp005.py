@@ -1,5 +1,5 @@
 """
-2016/12/31
+2016/12/31 2.5h
 exp name  : exp005
 desciption: Comparison of XGB, XGB_GPU and LightGBM on arificial datasets
 fname     : exp005.py
@@ -12,27 +12,34 @@ params:
   n_features          : 28
   n_rounds            : 100
   n_clusters_per_class: 64
-  max_depth           : 5, 10,11,12,13,14,15,16
+  max_depth           : 5,6,.. ,15
+    The depth limit of grow_gpu is 15.
 
-                  Time(sec)              Ratio
-                    XGB_CPU    LGB XGB_CPU/LGB
-n_train max_depth                             
-1000000 5              76.2    4.8        16.0
-        10            161.0   12.8        12.5
-        11            179.3   16.1        11.1
-        12            193.0   21.4         9.0
-        13            209.4   29.7         7.0
-        14            230.8   44.7         5.2
-        15            243.2   80.9         3.0
-        16            264.3  163.7         1.6
-2000000 5             207.7    9.6        21.7
-        10            443.3   25.1        17.7
-        11            464.7   29.6        15.7
-        12            496.5   38.3        13.0
-        13            537.8   50.7        10.6
-        14            582.0   72.2         8.1
-        15            629.2  123.3         5.1
-        16            676.1  236.3         2.9
+                  Time(sec)                      Ratio            
+                    XGB_CPU XGB_GPU    LGB XGB_CPU/LGB XGB_GPU/LGB
+n_train max_depth                                                 
+1000000 5              77.8    28.4    4.8        16.3         5.9
+        6              94.2    33.3    5.8        16.3         5.8
+        7             107.1    37.8    7.1        15.0         5.3
+        8             129.2    42.3    8.3        15.6         5.1
+        9             139.4    46.9   10.2        13.6         4.6
+        10            155.7    51.3   12.5        12.5         4.1
+        11            182.0    55.8   16.1        11.3         3.5
+        12            199.6    60.4   21.3         9.4         2.8
+        13            216.1    64.9   29.1         7.4         2.2
+        14            229.3    69.8   44.2         5.2         1.6
+        15            248.7    75.1   83.5         3.0         0.9
+2000000 5             199.7    63.4    9.5        21.0         6.7
+        6             233.6    74.7   11.3        20.6         6.6
+        7             274.6    85.6   13.8        19.8         6.2
+        8             316.6    96.5   16.7        19.0         5.8
+        9             362.5   107.2   20.3        17.8         5.3
+        10            406.9   118.6   26.1        15.6         4.6
+        11            449.6   128.8   30.5        14.8         4.2
+        12            495.4   139.5   37.3        13.3         3.7
+        13            537.0   150.2   49.1        10.9         3.1
+        14            577.7   161.1   70.6         8.2         2.3
+        15            627.6   172.3  121.0         5.2         1.4
 
 """
 import pandas as pd
@@ -57,11 +64,9 @@ times = []
 n_classes = 2
 n_clusters_per_class = 64
 n_rounds = 100
-
-n_rounds = 16
 fname_header = "exp005_"
 
-for n_train in [10**5, 2*10**5]:
+for n_train in [10**6, 2*10**6]:
     n_valid = n_train / 4
     n_all = n_train + n_valid
     X, y = make_classification(n_samples=n_all, n_classes=n_classes, n_features=28,
@@ -72,7 +77,7 @@ for n_train in [10**5, 2*10**5]:
     y_train = y[:n_train]
     X_valid = X[n_train:]
     y_valid = y[n_train:]
-    for max_depth in [5, 10]:#,11,12,13,14,15,16]:
+    for max_depth in range(5, 16):
         fname_footer = "n_train_%d_max_depth_%d.csv" % (n_train, max_depth)
         params_xgb['max_depth'] = max_depth
         params_lgb['max_depth'] = max_depth
