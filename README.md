@@ -1,4 +1,4 @@
-### Comparison of XGB:[2b6aa77](https://github.com/dmlc/xgboost/tree/167864da75073d6bb6f04e3e9dafce10db1b34dd) and LGBM:[ebfc852](https://github.com/Microsoft/LightGBM/tree/c7ef83227976adc4143097b203e3862c485e90cf)
+### Comparison of XGB:[7948d1c](https://github.com/dmlc/xgboost/tree/7948d1c7998eeb205f13740c5a1bb3f381c37b6a) and LGBM:[bd7274b](https://github.com/Microsoft/LightGBM/tree/bd7274baee41be744c9cf3969340fe8540000fad)
 
 The objective function of LGBM for binary classification is slightly different from XGB's.
 * LGBM: -log(1+exp(-2 * sigmoid * label * score))

@@ -1,7 +1,7 @@
 """
-2016/12/17 1.9h
+2016/12/31
 exp name  : exp005
-desciption: Comparison of XGB:CPU and LightGBM on arificial datasets
+desciption: Comparison of XGB, XGB_GPU and LightGBM on arificial datasets
 fname     : exp005.py
 env       : i7 4790k, 32G, GTX1070, ubuntu 14.04.4LTS
 preprocess: None
@@ -57,9 +57,11 @@ times = []
 n_classes = 2
 n_clusters_per_class = 64
 n_rounds = 100
+
+n_rounds = 10
 fname_header = "exp005_"
 
-for n_train in [10**6, 2*10**6]:
+for n_train in [10**5, 2*10**5]:
     n_valid = n_train / 4
     n_all = n_train + n_valid
     X, y = make_classification(n_samples=n_all, n_classes=n_classes, n_features=28,
@@ -70,7 +72,7 @@ for n_train in [10**6, 2*10**6]:
     y_train = y[:n_train]
     X_valid = X[n_train:]
     y_valid = y[n_train:]
-    for max_depth in [5, 10,11,12,13,14,15,16]:
+    for max_depth in [5, 10]:#,11,12,13,14,15,16]:
         fname_footer = "n_train_%d_max_depth_%d.csv" % (n_train, max_depth)
         params_xgb['max_depth'] = max_depth
         params_lgb['max_depth'] = max_depth
@@ -80,16 +82,16 @@ for n_train in [10**6, 2*10**6]:
         print(params[-1])
         time_sec_lst = experiment_binary(X_train, y_train, X_valid, y_valid,
                                          params_xgb, params_lgb, n_rounds=n_rounds,
-                                         use_gpu=False,
+                                         use_gpu=True,
                                          fname_header=fname_header, fname_footer=fname_footer,
                                          n_skip=15)
         times.append(time_sec_lst)
 
-df_time = pd.DataFrame(times, columns=['XGB_CPU', 'LGB']).join(pd.DataFrame(params))
+df_time = pd.DataFrame(times, columns=['XGB_CPU', 'XGB_GPU', 'LGB']).join(pd.DataFrame(params))
 df_time['XGB_CPU/LGB'] = df_time['XGB_CPU'] / df_time['LGB']
 df_time.set_index(['n_train', 'max_depth'], inplace=True)
 df_time.columns = pd.MultiIndex(levels=[['Time(sec)', 'Ratio'],[df_time.columns]],
-                                labels=[[0,0,1,],[0,1,2]])
+                                labels=[[0,0,0,1,1],[0,1,2,3,4]])
 df_time.to_csv('log/' + fname_header + 'time.csv')
 
 pd.set_option('display.precision', 1)
