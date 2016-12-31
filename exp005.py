@@ -58,7 +58,7 @@ n_classes = 2
 n_clusters_per_class = 64
 n_rounds = 100
 
-n_rounds = 10
+n_rounds = 16
 fname_header = "exp005_"
 
 for n_train in [10**5, 2*10**5]:
@@ -89,6 +89,7 @@ for n_train in [10**5, 2*10**5]:
 
 df_time = pd.DataFrame(times, columns=['XGB_CPU', 'XGB_GPU', 'LGB']).join(pd.DataFrame(params))
 df_time['XGB_CPU/LGB'] = df_time['XGB_CPU'] / df_time['LGB']
+df_time['XGB_GPU/LGB'] = df_time['XGB_GPU'] / df_time['LGB']
 df_time.set_index(['n_train', 'max_depth'], inplace=True)
 df_time.columns = pd.MultiIndex(levels=[['Time(sec)', 'Ratio'],[df_time.columns]],
                                 labels=[[0,0,0,1,1],[0,1,2,3,4]])
