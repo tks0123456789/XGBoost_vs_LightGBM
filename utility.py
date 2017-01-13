@@ -4,7 +4,128 @@ import numpy as np
 import pandas as pd
 import xgboost as xgb
 import lightgbm as lgb
-import json
+
+def experiment_binary_gb(X_train, y_train, X_valid, y_valid,
+                         params_xgb_lst, model_str_lst,
+                         params_lgb,
+                         n_rounds=10,
+                         fname_header=None, fname_footer=None, n_skip=10):
+    t000 = time.time()
+    
+    df_score_train = pd.DataFrame(index=range(n_rounds))
+    df_score_valid = pd.DataFrame(index=range(n_rounds))
+    feature_names = ['f%d' % i for i in range(X_train.shape[1])]
+    feat_imps_dict = {}
+    leaf_cnts_dict = {}
+    time_sec_lst = []
+
+    # XGBoost
+    metric = params_xgb_lst[0]['eval_metric']
+    xgmat_train = xgb.DMatrix(X_train, label=y_train)
+    xgmat_valid = xgb.DMatrix(X_valid, label=y_valid)
+    watchlist = [(xgmat_train,'train'), (xgmat_valid, 'valid')]
+    print("training XGBoost")
+    for params_xgb,  model_str in zip(params_xgb_lst, model_str_lst):
+        evals_result = {}
+        t0 = time.time()
+        bst = xgb.train(params_xgb, xgmat_train, n_rounds, watchlist,
+                        evals_result=evals_result, verbose_eval=False)
+        time_sec_lst.append(time.time() - t0)
+        print("%s: %s seconds" % (model_str, str(time_sec_lst[-1])))
+        df_score_train[model_str] = evals_result['train'][metric]
+        df_score_valid[model_str] = evals_result['valid'][metric]
+        feat_imps_dict[model_str] = pd.Series(bst.get_score(importance_type='gain'), index=feature_names)
+        dmp = bst.get_dump()
+        leaf_cnts_dict[model_str] = [tree.count('leaf') for tree in dmp]
+        
+    # LightGBM
+    metric = params_lgb['metric']
+    lgb_train = lgb.Dataset(X_train, y_train)
+    lgb_valid = lgb.Dataset(X_valid, y_valid)
+    watchlist = [lgb_train, lgb_valid]
+    print ("training LightGBM")
+    evals_result = {}
+    t0 = time.time()
+    gbm = lgb.train(params_lgb, lgb_train, num_boost_round=n_rounds,
+                    valid_sets=watchlist, evals_result=evals_result, verbose_eval=False)
+    time_sec_lst.append(time.time() - t0)
+    print ("LightGBM: %s seconds" % (str(time_sec_lst[-1])))
+    df_score_train['LGB'] = evals_result['training'][metric]
+    df_score_valid['LGB'] = evals_result['valid_1'][metric]
+    feat_imps_dict['LGB'] = gbm.feature_importance("gain")
+    model_json = gbm.dump_model()
+    tree_lst = [str(tree['tree_structure']) for tree in model_json['tree_info']]
+    leaf_cnts_dict['LGB'] = [tree.count('leaf_value') for tree in tree_lst]
+
+
+    print('\n%s train' % metric)
+    print(df_score_train.iloc[::n_skip,])
+    print('\n%s valid' % metric)
+    print(df_score_valid.iloc[::n_skip,])
+
+    columns = model_str_lst + ['LGB']
+    print('\nLeaf counts')
+    df_leaf_cnts = pd.DataFrame(leaf_cnts_dict, columns=columns)
+    print(df_leaf_cnts.iloc[::n_skip,])
+
+    df_feat_imps = pd.DataFrame(feat_imps_dict,
+                                index=feature_names,
+                                columns=columns).fillna(0)
+    df_feat_imps /= df_feat_imps.sum(0)
+    df_feat_imps = df_feat_imps.sort_values(model_str_lst[0], ascending=False)
+    print('\nFeature importance(gain) sorted by ' + model_str_lst[0])
+    print(df_feat_imps.head(5))
+    if fname_header is not None:
+        df_score_train.to_csv('log/' + fname_header + 'Score_Train_' + fname_footer)
+        df_score_valid.to_csv('log/' + fname_header + 'Score_Valid_' + fname_footer)
+        df_leaf_cnts.to_csv('log/' + fname_header + 'Leaf_cnts_' + fname_footer)
+        df_feat_imps.to_csv('log/' + fname_header + 'Feat_imps_' + fname_footer)
+    return(time_sec_lst)
+
+def exp_binary_lgb(X_train, y_train, X_valid, y_valid,
+                   params_lgb_lst, model_str_lst, metric, n_rounds=10,
+                   fname_header=None, fname_footer=None, n_skip=10):
+    t000 = time.time()
+
+    df_score_train = pd.DataFrame(index=range(n_rounds))
+    df_score_valid = pd.DataFrame(index=range(n_rounds))
+    feature_names = ['f%d' % i for i in range(X_train.shape[1])]
+    feat_imps_dict = {}
+    leaf_cnts_dict = {}
+    time_sec_lst = []
+
+    # LightGBM
+    lgb_train = lgb.Dataset(X_train, y_train)
+    lgb_valid = lgb.Dataset(X_valid, y_valid)
+    watchlist = [lgb_train, lgb_valid]
+    print ("training LightGBM")
+    for params_lgb,  model_str in zip(params_lgb_lst, model_str_lst):
+        evals_result = {}
+        t0 = time.time()
+        gbm = lgb.train(params_lgb, lgb_train, num_boost_round=n_rounds,
+                        valid_sets=watchlist, evals_result=evals_result, verbose_eval=False)
+        time_sec_lst.append(time.time() - t0)
+        print ("LightGBM: %s seconds" % (str(time_sec_lst[-1])))
+        df_score_train[model_str] = evals_result['training'][metric]
+        df_score_valid[model_str] = evals_result['valid_1'][metric]
+        model_json = gbm.dump_model()
+        tree_lst = [str(tree['tree_structure']) for tree in model_json['tree_info']]
+        leaf_cnts_dict[model_str] = [tree.count('leaf_value') for tree in tree_lst]
+
+    print('\n%s train' % metric)
+    print(df_score_train.iloc[::n_skip,])
+    print('\n%s valid' % metric)
+    print(df_score_valid.iloc[::n_skip,])
+
+    print('\nLeaf counts')
+    df_leaf_cnts = pd.DataFrame(leaf_cnts_dict, columns=model_str_lst)
+    print(df_leaf_cnts.iloc[::n_skip,])
+
+    if fname_header is not None:
+        df_score_train.to_csv('log/' + fname_header + 'Score_Train_' + fname_footer)
+        df_score_valid.to_csv('log/' + fname_header + 'Score_Valid_' + fname_footer)
+        df_leaf_cnts.to_csv('log/' + fname_header + 'Leaf_cnts_' + fname_footer)
+    return(time_sec_lst)
 
 def experiment_binary(X_train, y_train, X_valid, y_valid,
                       params_xgb, params_lgb, n_rounds=10, use_gpu=True,
@@ -101,51 +222,6 @@ def experiment_binary(X_train, y_train, X_valid, y_valid,
         df_feat_imps.to_csv('log/' + fname_header + 'Feat_imps_' + fname_footer)
     return(time_sec_lst)
 
-def exp_binary_lgbm(X_train, y_train, X_valid, y_valid,
-                    params_lgb_lst, model_str_lst, metric,
-                    n_rounds=10,
-                    fname_header=None, fname_footer=None, n_skip=10):
-    t000 = time.time()
-
-    df_score_train = pd.DataFrame(index=range(n_rounds))
-    df_score_valid = pd.DataFrame(index=range(n_rounds))
-    feature_names = ['f%d' % i for i in range(X_train.shape[1])]
-    feat_imps_dict = {}
-    leaf_cnts_dict = {}
-    time_sec_lst = []
-
-    # LightGBM
-    lgb_train = lgb.Dataset(X_train, y_train)
-    lgb_valid = lgb.Dataset(X_valid, y_valid)
-    watchlist = [lgb_train, lgb_valid]
-    print ("training LightGBM")
-    for params_lgb,  model_str in zip(params_lgb_lst, model_str_lst):
-        evals_result = {}
-        t0 = time.time()
-        gbm = lgb.train(params_lgb, lgb_train, num_boost_round=n_rounds,
-                        valid_sets=watchlist, evals_result=evals_result, verbose_eval=False)
-        time_sec_lst.append(time.time() - t0)
-        print ("LightGBM: %s seconds" % (str(time_sec_lst[-1])))
-        df_score_train[model_str] = evals_result['training'][metric]
-        df_score_valid[model_str] = evals_result['valid_1'][metric]
-        model_json = gbm.dump_model()
-        tree_lst = [str(tree['tree_structure']) for tree in model_json['tree_info']]
-        leaf_cnts_dict[model_str] = [tree.count('leaf_value') for tree in tree_lst]
-
-    print('\n%s train' % metric)
-    print(df_score_train.iloc[::n_skip,])
-    print('\n%s valid' % metric)
-    print(df_score_valid.iloc[::n_skip,])
-
-    print('\nLeaf counts')
-    df_leaf_cnts = pd.DataFrame(leaf_cnts_dict, columns=model_str_lst)
-    print(df_leaf_cnts.iloc[::n_skip,])
-
-    if fname_header is not None:
-        df_score_train.to_csv('log/' + fname_header + 'Score_Train_' + fname_footer)
-        df_score_valid.to_csv('log/' + fname_header + 'Score_Valid_' + fname_footer)
-        df_leaf_cnts.to_csv('log/' + fname_header + 'Leaf_cnts_' + fname_footer)
-    return(time_sec_lst)
 
 def experiment_binary_train(X_train, y_train,
                             params_xgb, params_lgb, n_rounds=10,
