@@ -16,11 +16,23 @@ So LGBM's parameter sigmoid is set to 0.5.
   * n_features           : 28
   * n_rounds             : 500
   * max_depth            : 5, 10, 15
-* Artificial datasets(make_classification(n_clusters_per_class=64))
-  * preprocessing        : None(exp005), Equal freq binning(exp006)
-  * n_train              : 1M, 2M
+* exp010
+  * model                : XGB(CPU, EQBIN_depthwise, EQBIN_lossguie, GPU), LGB
+  * dataset              : make_classification
+  * n_train              : 0.5M, 1M, 2M
   * n_valid              : n_train/4
-  * n_features           : 28
-  * n_clusters_per_class : 64
-  * max_depth            : 5, 10,11,..,16
+  * n_features           : 32
+  * n_rounds             : 100
+  * n_clusters_per_class : 8
+  * max_depth            : 5, 10, 15
+* exp011
+  * model                : XGB(EQBIN_depthwise, EQBIN_lossguie), LGB
+  * dataset              : make_classification
+  * n_train              : 0.5M, 1M, 2M
+  * n_valid              : n_train/4
+  * n_features           : 32
+  * n_clusters_per_class : 8
+  * n_rounds             : 100
+  * max_depth            : 5, 10, 15, 20
+  * num_leaves           : 256, 1024, 4096
 
