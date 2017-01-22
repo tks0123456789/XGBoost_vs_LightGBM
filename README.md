@@ -23,6 +23,20 @@
   * max_depth            : 5, 10, 15
 * exp011
   * model                : XGB(EQBIN_depthwise, EQBIN_lossguie), LGB
+  * objective            : binary classification
+  * metric               : Logloss
+  * dataset              : make_classification
+  * n_train              : 0.5M, 1M, 2M
+  * n_valid              : n_train/4
+  * n_features           : 32
+  * n_clusters_per_class : 8
+  * n_rounds             : 200
+  * max_depth            : 5, 10, 15, 20
+  * num_leaves           : 32, 256, 1024, 4096
+* exp012(same as exp011 except metric is AUC)
+  * model                : XGB(EQBIN_depthwise, EQBIN_lossguie), LGB
+  * objective            : binary classification
+  * metric               : AUC
   * dataset              : make_classification
   * n_train              : 0.5M, 1M, 2M
   * n_valid              : n_train/4
