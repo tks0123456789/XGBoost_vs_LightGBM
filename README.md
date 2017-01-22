@@ -2,10 +2,10 @@
 
 ~~The objective function of LGB for binary classification is slightly different from XGB's.~~
 
+* XGB : -log(1+exp(-label * score))
 * ~~LGB: -log(1+exp(-2 * sigmoid * label * score))~~
 * LGB: -log(1+exp(-sigmoid * label * score))
   * Changed by [46d4eec](https://github.com/Microsoft/LightGBM/commit/46d4eecf2e20ed970fa4f1dbfcf6b146c19a7597), but predicted value is still 1 / 1+exp(-2 * sigmoid * label * score). That's why the logloss of LGB is worse than XGB's.
-* XGB : -log(1+exp(-label * score))
   * label in {-1, 1}, score: leaf values
   * The default value of sigmoid is 1.0.
 
