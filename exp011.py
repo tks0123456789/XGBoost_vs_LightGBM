@@ -1,5 +1,5 @@
 """
-2017/1/22 2.1h
+2017/1/23 
 exp name  : exp011
 desciption: Comparison of XGBoost and LightGBM on arificial datasets
 fname     : exp011.py
@@ -108,7 +108,6 @@ from utility import experiment_binary_gb
 from data_path import data_path
 
 params_xgb = {'objective':'binary:logistic', 'eta':0.1, 'lambda':1,
-              'tree_method':'exact', 'updater':'grow_colmaker',
               'eval_metric':'logloss',
               'silent':True, 'threads':8}
 
@@ -141,7 +140,7 @@ fname_header = "exp011_"
 for n_train in [5*10**5, 10**6, 2*10**6]:
     n_valid = n_train // 4
     n_all = n_train + n_valid
-    #params_lgb['bin_construct_sample_cnt'] = n_train
+    params_lgb['bin_construct_sample_cnt'] = n_train # default=50000
     X, y = make_classification(n_samples=n_all, n_classes=n_classes,
                                n_features=n_features,
                                n_informative=n_informative,
@@ -177,11 +176,14 @@ for model_str in model_str_lst:
     df_times[model_str + '/LGB'] = df_times[model_str] / df_times['LGB']
 df_times.columns = pd.MultiIndex(levels=[['Time(sec)', 'Ratio'],[df_times.columns]],
                                 labels=[np.repeat([0, 1], [3, 2]), range(5)])
-#df_times.to_csv('log/' + fname_header + 'times.csv')
+df_times.to_csv('log/' + fname_header + 'times.csv')
 
 df_valid_scores = pd.DataFrame(valid_scores, columns=model_str_lst+['LGB']).join(pd.DataFrame(params))
 df_valid_scores.set_index(['n_train', 'max_depth', 'num_leaves'], inplace=True)
-#df_valid_scores.to_csv('log/' + fname_header + 'valid_scores.csv')
+
+A, B = model_str_lst[1], "LGB"
+df_valid_scores[A + "-" + B] = df_valid_scores[A] - df_valid_scores[B]
+df_valid_scores.to_csv('log/' + fname_header + 'valid_scores.csv')
 
 pd.set_option('display.precision', 1)
 pd.set_option('display.width', 100)
@@ -190,7 +192,7 @@ print(df_times)
 
 pd.set_option('display.precision', 4)
 pd.set_option('display.width', 100)
-print('\n')
+print('\nLogloss')
 print(df_valid_scores)
 
 print ("\nDone: %s seconds" % (str(time.time() - time_begin)))
