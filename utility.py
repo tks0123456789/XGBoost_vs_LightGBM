@@ -80,7 +80,7 @@ def experiment_binary_gb(X_train, y_train, X_valid, y_valid,
         df_score_valid.to_csv('log/' + fname_header + 'Score_Valid_' + fname_footer)
         df_leaf_cnts.to_csv('log/' + fname_header + 'Leaf_cnts_' + fname_footer)
         df_feat_imps.to_csv('log/' + fname_header + 'Feat_imps_' + fname_footer)
-    return(time_sec_lst)
+    return(time_sec_lst, df_score_valid.tail(1).values[0].tolist())
 
 def exp_binary_lgb(X_train, y_train, X_valid, y_valid,
                    params_lgb_lst, model_str_lst, metric, n_rounds=10,
