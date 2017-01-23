@@ -1,11 +1,11 @@
-### Comparison of XGB 2017/1/21:[5d74578](https://github.com/dmlc/xgboost/tree/5d74578095e1414cfcb62f9732165842f25b81ca) and LGB 2017/1/21:[112ab6f](https://github.com/Microsoft/LightGBM/tree/112ab6f9b67f7329b0f84998c5b6b2d821d9845b)
+### Comparison of XGB 2017/1/21:[5d74578](https://github.com/dmlc/xgboost/tree/5d74578095e1414cfcb62f9732165842f25b81ca) and LGB 2017/1/23:[6c736da](https://github.com/Microsoft/LightGBM/tree/6c736da9325dba9d56108ae6742cb5242516911b)
 
 ~~The objective function of LGB for binary classification is slightly different from XGB's.~~
 
 * XGB : -log(1+exp(-label * score))
 * ~~LGB: -log(1+exp(-2 * sigmoid * label * score))~~
 * LGB: -log(1+exp(-sigmoid * label * score))
-  * Changed by [46d4eec](https://github.com/Microsoft/LightGBM/commit/46d4eecf2e20ed970fa4f1dbfcf6b146c19a7597), but the predicted value is still 1 / 1+exp(-2 * sigmoid * label * score). That's why LGB did worse than XGB in logloss.
+  * Changed by [46d4eec](https://github.com/Microsoft/LightGBM/commit/46d4eecf2e20ed970fa4f1dbfcf6b146c19a7597)
   * label in {-1, 1}, score: leaf values
   * The default value of sigmoid is 1.0.
 
@@ -33,7 +33,7 @@
   * n_rounds             : 200
   * max_depth            : 5, 10, 15, 20
   * num_leaves           : 32, 256, 1024, 4096
-* exp012(same as exp011 except metric is AUC)
+* ~~exp012(same as exp011 except metric is AUC)~~
   * model                : XGB(EQBIN_depthwise, EQBIN_lossguie), LGB
   * objective            : binary classification
   * metric               : AUC
