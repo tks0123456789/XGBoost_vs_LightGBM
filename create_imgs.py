@@ -51,7 +51,7 @@ for n_train in [10**4, 10**5, 10**6, 10**7]:
 
 # Artificial datasets
 exp_lst = [{'header':"exp011_", 'metric':"Logloss"}, {'header':"exp012_", 'metric':"AUC"}]
-for exp in exp_lst:
+for exp in exp_lst[:1]:
     header = exp['header']
     metric = exp['metric']
     for n_train in [5*10**5, 10**6, 2*10**6]:
