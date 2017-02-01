@@ -50,16 +50,28 @@ for n_train in [10**4, 10**5, 10**6, 10**7]:
 """
 
 # Artificial datasets
-exp_lst = [{'header':"exp011_", 'metric':"Logloss"}, {'header':"exp012_", 'metric':"AUC"}]
-for exp in exp_lst[:1]:
-    header = exp['header']
-    metric = exp['metric']
-    for n_train in [5*10**5, 10**6, 2*10**6]:
-        for num_leaves in [32, 256, 1024, 4096]:
+N = 10**4
+exp_lst = [{'header'      :'exp011_',
+            'metric'      :'Logloss',
+            'n_train_s'   :[5*10**5, 10**6, 2*10**6],
+            'num_leaves_s':[32, 256, 1024, 4096, 16384],
+            'max_depth_s' :[5, 10, 15, 20],
+        },
+           {'header'      :'exp012_',
+            'metric'      :'Logloss',
+            'n_train_s'   :[N, 2*N, 4*N, 8*N, 16*N, 32*N],
+            'num_leaves_s':[32, 256, 1024, 4096],
+            'max_depth_s' :[5, 10, 15, 20],
+        }]
+for exp_dict in exp_lst:
+    header = exp_dict['header']
+    metric = exp_dict['metric']
+    for n_train in exp_dict['n_train_s']:
+        for num_leaves in exp_dict['num_leaves_s']:
             leaf_cnts = []
             loss_valid = []
             max_depth_lst = []
-            for max_depth in [5, 10, 15, 20]:
+            for max_depth in exp_dict['max_depth_s']:
                 if num_leaves > 2 ** max_depth:
                     continue
                 max_depth_lst.append(max_depth)
@@ -69,10 +81,17 @@ for exp in exp_lst[:1]:
                 fname_loss_valid = "log/" + header + "Score_Valid" + fname_footer
                 loss_valid.append(pd.read_csv(fname_loss_valid, index_col=0))
             max_depth_cnts = len(max_depth_lst)
+            
             # Leaf cnts
             fig, axes = plt.subplots(max_depth_cnts, 1, figsize=(19.8, 10))
             plt.subplots_adjust(top=0.93)
-            dname = header[:-1] + ", n_train:%.1fM, num_leaves:%d" % (n_train/10**6, num_leaves)
+            if n_train > 10**6/2:
+                str_n_train = "%.1fM" % (n_train/10**6)
+            else:
+                str_n_train = "%dK" % int(n_train/1000)
+                
+            dname = header[:-1] + ", n_train:%s, num_leaves:%d" % \
+                    (str_n_train, num_leaves)
             plt.suptitle(dname, fontsize=16)
             for i, max_depth in enumerate(max_depth_lst):
                 leaf_cnts[i].plot(title="max_depth:%d" % max_depth,
@@ -83,7 +102,8 @@ for exp in exp_lst[:1]:
             
                 axes[i].set_ylabel("Leaf counts")
                 axes[max_depth_cnts - 1].set_xlabel("Boosting iterations")
-                plt.savefig("img/" + header + "leafcnts_%.1fM_num_leaves_%d.png" % (n_train/10**6, num_leaves))
+                plt.savefig("img/" + header + "leafcnts_%s_num_leaves_%d.png" % \
+                            (str_n_train, num_leaves))
     
             # Score
             fig, axes = plt.subplots(max_depth_cnts, 1, figsize=(19.8, 10))
@@ -95,4 +115,5 @@ for exp in exp_lst[:1]:
                     axes[i].set_xticks([])
                 axes[i].set_ylabel(metric)
             axes[max_depth_cnts - 1].set_xlabel("Boosting iterations")
-            plt.savefig("img/" + header + metric + "_%.1fM_num_leaves_%d.png" % (n_train/10**6, num_leaves))
+            plt.savefig("img/" + header + metric + "_%s_num_leaves_%d.png" % \
+                        (str_n_train, num_leaves))
