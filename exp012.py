@@ -180,17 +180,17 @@ from sklearn.datasets import make_classification
 from utility import experiment_binary_gb
 from data_path import data_path
 
-params_xgb = {'objective'       : 'binary:logistic',
-              'eval_metric'     : 'logloss',
-              'tree_method'     : 'exact',
-              'updater'         : 'grow_colmaker',
-              'eta'             : 0.1, #default=0.3
-              'lambda'          : 1, #default
-              'min_child_weight': 1, #default
-              'silent'          : True,
-              'threads'         : 8}
+params_xgb_cpu = {'objective'       : 'binary:logistic',
+                  'eval_metric'     : 'logloss',
+                  'tree_method'     : 'exact',
+                  'updater'         : 'grow_colmaker',
+                  'eta'             : 0.1, #default=0.3
+                  'lambda'          : 1, #default
+                  'min_child_weight': 1, #default
+                  'silent'          : True,
+                  'threads'         : 8}
 
-params_xgb_eqbin_d = params_xgb.copy()
+params_xgb_eqbin_d = params_xgb_cpu.copy()
 params_xgb_eqbin_d.update({'tree_method': 'hist',
                            'updater'    : 'grow_fast_histmaker',
                            'grow_policy': 'depthwise',
@@ -200,7 +200,7 @@ params_xgb_eqbin_d.update({'tree_method': 'hist',
 params_xgb_eqbin_l = params_xgb_eqbin_d.copy()
 params_xgb_eqbin_l.update({'grow_policy': 'lossguide'})
 
-params_xgb_gpu = params_xgb.copy()
+params_xgb_gpu = params_xgb_cpu.copy()
 params_xgb_gpu.update({'updater':'grow_gpu'})
 
 params_xgb_lst = [params_xgb_eqbin_d, params_xgb_eqbin_l]
