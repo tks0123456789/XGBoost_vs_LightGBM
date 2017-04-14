@@ -1,4 +1,4 @@
-### Comparison of XGB 2017/1/30:[179b384](https://github.com/dmlc/xgboost/tree/179b384e396a8897340c080d9af79af215c1caaf) and LGB 2017/1/30:[cba87c3](https://github.com/Microsoft/LightGBM/tree/cba87c377bd8da1ffa59d484d1f224a9cb6a88e7)
+### Comparison of XGB 2017/4/30:[8222755](https://github.com/dmlc/xgboost/tree/8222755564d54fc97f8ac4b530c611d339a5f4c3) and LGB 2017/4/14:[9224a9d](https://github.com/Microsoft/LightGBM/tree/9224a9d12521aae4fc47e25974a856bd2321ecad)
 
 ~~The objective function of LGB for binary classification is slightly different from XGB's.~~
 
@@ -12,7 +12,7 @@
 ~~So LGB's parameter sigmoid is set to 0.5.~~
 
 * LightGBM.ipynb: Modified version of [marugari's work](https://github.com/marugari/Notebooks/blob/ed6aa7835579ce9143850ed5956912895c984d56/LightGBM.ipynb)
-* exp010
+* ~~exp010~~
   * model                : XGB(CPU, EQBIN_depthwise, EQBIN_lossguie, GPU), LGB
   * objective            : Binary classification
   * metric               : Logloss
