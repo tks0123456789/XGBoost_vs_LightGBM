@@ -24,7 +24,9 @@
   * n_rounds             : 100
   * max_depth            : 5, 10, 15
   * num_leaves           : 2 ** max_depth
-* ~~exp010
+  
+The folloing code were run on older versions of XGBoost and LightGBM
+* exp010
   * model                : XGB(CPU, EQBIN_depthwise, EQBIN_lossguie, GPU), LGB
   * objective            : Binary classification
   * metric               : Logloss
@@ -35,7 +37,7 @@
   * n_rounds             : 100
   * n_clusters_per_class : 8
   * max_depth            : 5, 10, 15~~
-* ~~exp011
+* exp011
   * model                : XGB(EQBIN_depthwise, EQBIN_lossguie), LGB
   * objective            : Binary classification
   * metric               : Logloss
@@ -47,7 +49,7 @@
   * n_rounds             : 200
   * max_depth            : 5, 10, 15, 20
   * num_leaves           : 32, 256, 1024, 4096, 16384~~
-* ~~exp012
+* exp012
   * model                : XGB(EQBIN_depthwise, EQBIN_lossguie), LGB
   * objective            : Binary classification
   * metric               : Logloss
@@ -58,5 +60,5 @@
   * n_clusters_per_class : 8
   * n_rounds             : 100
   * max_depth            : 5, 10, 15, 20
-  * num_leaves           : 32, 256, 1024, 4096~~
+  * num_leaves           : 32, 256, 1024, 4096
 
