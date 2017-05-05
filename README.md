@@ -1,4 +1,4 @@
-### Comparison of XGB 2017/4/30:[8222755](https://github.com/dmlc/xgboost/tree/8222755564d54fc97f8ac4b530c611d339a5f4c3) and LGB 2017/4/14:[9224a9d](https://github.com/Microsoft/LightGBM/tree/9224a9d12521aae4fc47e25974a856bd2321ecad)
+### Comparison of XGB 2017/5/3:[197a9ea](https://github.com/dmlc/xgboost/tree/197a9eacc5e895b27556acc7157eafb8815456fb) and LGB 2017/5/5:[b54f60f](https://github.com/Microsoft/LightGBM/tree/b54f60f348ee7be1780f7f7aa0debc60acbb782d)
 
 ~~The objective function of LGB for binary classification is slightly different from XGB's.~~
 
@@ -47,4 +47,16 @@
   * n_rounds             : 100
   * max_depth            : 5, 10, 15, 20
   * num_leaves           : 32, 256, 1024, 4096
+* exp013
+  * model                : XGB(hist_depthwise, hist_lossguie, hist_GPU, GPU), LGB
+  * objective            : Binary classification
+  * metric               : Logloss
+  * dataset              : make_classification
+  * n_train              : 0.5M, 1M, 2M, 4M
+  * n_valid              : n_train/4
+  * n_features           : 32
+  * n_clusters_per_class : 8
+  * n_rounds             : 100
+  * max_depth            : 5, 10, 15
+  * num_leaves           : 2 ** max_depth
 
