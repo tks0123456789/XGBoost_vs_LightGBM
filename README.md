@@ -25,7 +25,7 @@
   * max_depth            : 5, 10, 15
   * num_leaves           : 2 ** max_depth
   
-The folloing code were run on older versions of XGBoost and LightGBM
+The following codes were run on older versions of XGBoost and LightGBM
 * exp010
   * model                : XGB(CPU, EQBIN_depthwise, EQBIN_lossguie, GPU), LGB
   * objective            : Binary classification
