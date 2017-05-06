@@ -24,6 +24,18 @@
   * n_rounds             : 100
   * max_depth            : 5, 10, 15
   * num_leaves           : 2 ** max_depth
+* exp014
+  * model                : XGB(hist_depthwise, hist_lossguie, hist_GPU, GPU), LGB
+  * objective            : Binary classification
+  * metric               : Logloss
+  * dataset              : make_classification
+  * n_train              : 1,2,4,8,16,32,64 * 10K
+  * n_valid              : n_train/4
+  * n_features           : 256
+  * n_clusters_per_class : 8
+  * n_rounds             : 100
+  * max_depth            : 5, 10
+  * num_leaves           : 2 ** max_depth
   
 The following codes were run on older versions of XGBoost and LightGBM
 * exp010
