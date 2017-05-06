@@ -1,4 +1,4 @@
-### Comparison of XGB 2017/5/3:[197a9ea](https://github.com/dmlc/xgboost/tree/197a9eacc5e895b27556acc7157eafb8815456fb) and LGB 2017/5/5:[b54f60f](https://github.com/Microsoft/LightGBM/tree/b54f60f348ee7be1780f7f7aa0debc60acbb782d)
+### Comparison of XGB [197a9ea](https://github.com/dmlc/xgboost/tree/197a9eacc5e895b27556acc7157eafb8815456fb)(2017/5/3) and LGB [b54f60f](https://github.com/Microsoft/LightGBM/tree/b54f60f348ee7be1780f7f7aa0debc60acbb782d)(2017/5/5)
 
 ~~The objective function of LGB for binary classification is slightly different from XGB's.~~
 
@@ -36,7 +36,7 @@ The following codes were run on older versions of XGBoost and LightGBM
   * n_features           : 32
   * n_rounds             : 100
   * n_clusters_per_class : 8
-  * max_depth            : 5, 10, 15~~
+  * max_depth            : 5, 10, 15
 * exp011
   * model                : XGB(EQBIN_depthwise, EQBIN_lossguie), LGB
   * objective            : Binary classification
@@ -48,7 +48,7 @@ The following codes were run on older versions of XGBoost and LightGBM
   * n_clusters_per_class : 8
   * n_rounds             : 200
   * max_depth            : 5, 10, 15, 20
-  * num_leaves           : 32, 256, 1024, 4096, 16384~~
+  * num_leaves           : 32, 256, 1024, 4096, 16384
 * exp012
   * model                : XGB(EQBIN_depthwise, EQBIN_lossguie), LGB
   * objective            : Binary classification
