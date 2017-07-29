@@ -1,4 +1,4 @@
-### Comparison of XGB [197a9ea](https://github.com/dmlc/xgboost/tree/197a9eacc5e895b27556acc7157eafb8815456fb)(2017/5/3) and LGB [b54f60f](https://github.com/Microsoft/LightGBM/tree/b54f60f348ee7be1780f7f7aa0debc60acbb782d)(2017/5/5)
+### Comparison of XGB [0e06d18](https://github.com/dmlc/xgboost/tree/0e06d1805d06fab063ee5f39563a6c6ad7510345)(2017/7/29) and LGB [2e82123](https://github.com/Microsoft/LightGBM/tree/2e821233bef9f45e260d01a8a6efdd5a30e3b5ac)(2017/7/28)
 
 ~~The objective function of LGB for binary classification is slightly different from XGB's.~~
 
