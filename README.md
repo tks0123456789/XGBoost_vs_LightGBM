@@ -1,4 +1,4 @@
-### Comparison of XGB [0e06d18](https://github.com/dmlc/xgboost/tree/0e06d1805d06fab063ee5f39563a6c6ad7510345)(2017/7/29) and LGB [2e82123](https://github.com/Microsoft/LightGBM/tree/2e821233bef9f45e260d01a8a6efdd5a30e3b5ac)(2017/7/28)
+### Comparisons of XGB [a8f670d](https://github.com/dmlc/xgboost/tree/a8f670d24742002ed35f8e4927d9e7b7d3ec1d14)(2017/11/02) and LGB [7a166fb](https://github.com/Microsoft/LightGBM/tree/7a166fb32271791fc164eca4d65f9819e6f7e902)(2017/11/01)
 
 * LightGBM.ipynb: Modified version of [marugari's work](https://github.com/marugari/Notebooks/blob/ed6aa7835579ce9143850ed5956912895c984d56/LightGBM.ipynb)
 * exp013
