@@ -1,11 +1,11 @@
 """
-2017/11/03 2.14h
+2018-10-13
 exp name  : exp013
 desciption: Comparison of XGBoost(hist_dw, hist_lg, hist_GPU, GPU and LightGBM on arificial datasets
-XGBoost   : a8f670d(2017/11/02)
-LightGBM  : 7a166fb(2017/11/01)
+XGBoost   : 0.80
+LightGBM  : 2.2.1
 fname     : exp013.py
-env       : i7 4790k, 32G, GTX1070, ubuntu 14.04.5LTS, CUDA V8.0.61, Python 3.4.3
+env       : i7 4790k, 32G, GTX1070, ubuntu 16.04.5 LTS, CUDA V9.0, Python 3.6.6
 preprocess: None
 result    : Logloss, Feature importance, Leaf counts, Time
 params:
@@ -16,55 +16,64 @@ params:
   n_clusters_per_class: 8
   max_depth           : 5, 10, 15
 
-                  Time(sec)                                       Ratio                           \
-                    hist_dw hist_lg hist_GPU     GPU    LGB hist_dw/LGB hist_lg/LGB hist_GPU/LGB   
-n_train max_depth                                                                                  
-500000  5               5.4     5.2      2.3    32.7    3.2         1.7         1.6          0.7   
-        10             15.9    15.9      3.4    65.0    8.2         1.9         1.9          0.4   
-        15             52.6    52.0     18.6   103.4   30.6         1.7         1.7          0.6   
-1000000 5              10.6    10.2      4.1    78.7    6.7         1.6         1.5          0.6   
-        10             26.2    25.6      6.1   167.6   17.7         1.5         1.4          0.3   
-        15             89.0    87.1     23.1   256.8   58.4         1.5         1.5          0.4   
-2000000 5              19.3    19.9      8.1   201.2   13.5         1.4         1.5          0.6   
-        10             42.0    41.6     11.8   446.2   34.0         1.2         1.2          0.3   
-        15            135.2   133.3     32.1   682.3   97.1         1.4         1.4          0.3   
-4000000 5              36.9    37.2     16.1   501.8   27.4         1.3         1.4          0.6   
-        10             73.8    71.0     22.4  1112.9   63.5         1.2         1.1          0.4   
-        15            209.3   207.9     50.3  1801.0  161.4         1.3         1.3          0.3   
+                  Time(sec)                                       Ratio  \
+                    hist_dw hist_lg hist_GPU     GPU    LGB hist_dw/LGB   
+n_train max_depth                                                         
+10000   5               0.5     0.5      0.4     0.6    0.1         4.0   
+        10              2.6     2.6      1.3     1.1    0.7         3.8   
+        15              4.6     4.6      2.6     1.6    2.7         1.7   
+500000  5               4.7     4.7      1.6    36.0    3.2         1.5   
+        10             15.6    15.5      6.0    78.0    8.5         1.8   
+        15             54.8    54.4     25.3   119.2   30.4         1.8   
+1000000 5               9.0     9.2      2.9    87.0    6.6         1.4   
+        10             25.1    24.8      8.7   186.0   17.1         1.5   
+        15             98.0    96.0     40.8   296.4   57.0         1.7   
+2000000 5              17.2    17.6      5.5   218.4   13.1         1.3   
+        10             40.8    40.5     12.8   472.1   33.9         1.2   
+        15            142.9   140.8     57.3   720.3   98.4         1.5   
+4000000 5              33.5    33.8     10.6   517.6   26.9         1.2   
+        10             69.3    68.8     20.1  1173.0   63.9         1.1   
+        15            223.3   222.7     77.4  1877.3  174.9         1.3   
 
-                           
-                  GPU/LGB  
-n_train max_depth          
-500000  5            10.3  
-        10            7.9  
-        15            3.4  
-1000000 5            11.8  
-        10            9.5  
-        15            4.4  
-2000000 5            14.9  
-        10           13.1  
-        15            7.0  
-4000000 5            18.3  
-        10           17.5  
-        15           11.2  
+                                                    
+                  hist_lg/LGB hist_GPU/LGB GPU/LGB  
+n_train max_depth                                   
+10000   5                 4.0          3.1     4.2  
+        10                3.8          1.9     1.6  
+        15                1.7          1.0     0.6  
+500000  5                 1.5          0.5    11.3  
+        10                1.8          0.7     9.2  
+        15                1.8          0.8     3.9  
+1000000 5                 1.4          0.4    13.2  
+        10                1.5          0.5    10.9  
+        15                1.7          0.7     5.2  
+2000000 5                 1.3          0.4    16.6  
+        10                1.2          0.4    13.9  
+        15                1.4          0.6     7.3  
+4000000 5                 1.3          0.4    19.3  
+        10                1.1          0.3    18.4  
+        15                1.3          0.4    10.7  
 
 Logloss
                    hist_dw  hist_lg  hist_GPU      GPU      LGB  hist_lg-LGB
 n_train max_depth                                                           
-500000  5          0.40130  0.40130   0.41027  0.41211  0.41021     -0.00891
-        10         0.27221  0.27221   0.26919  0.27344  0.27293     -0.00072
-        15         0.23004  0.23004   0.23097  0.23451  0.23118     -0.00115
-1000000 5          0.38365  0.38365   0.38332  0.38572  0.38339      0.00026
-        10         0.25140  0.25140   0.25133  0.25409  0.24857      0.00283
-        15         0.20795  0.20795   0.20930  0.21071  0.20863     -0.00068
-2000000 5          0.38377  0.38377   0.38352  0.38389  0.38525     -0.00149
-        10         0.23234  0.23234   0.23245  0.23623  0.23336     -0.00103
-        15         0.18010  0.18010   0.18206  0.18403  0.17999      0.00010
-4000000 5          0.43190  0.43190   0.43215  0.43203  0.42857      0.00333
-        10         0.25177  0.25177   0.25156  0.25572  0.24902      0.00274
-        15         0.17420  0.17420   0.17662  0.17850  0.17744     -0.00324
+10000   5          0.42634  0.42634   0.42403  0.42677  0.42632      0.00003
+        10         0.37524  0.37524   0.36959  0.37593  0.37447      0.00077
+        15         0.36915  0.36915   0.37087  0.36991  0.37369     -0.00454
+500000  5          0.40130  0.40130   0.41284  0.41211  0.41021     -0.00891
+        10         0.27221  0.27221   0.26997  0.27429  0.27266     -0.00045
+        15         0.22980  0.22980   0.23043  0.23361  0.22885      0.00095
+1000000 5          0.38365  0.38365   0.38523  0.38572  0.38339      0.00026
+        10         0.25140  0.25140   0.24990  0.25409  0.25074      0.00066
+        15         0.20795  0.20795   0.20705  0.21098  0.20967     -0.00172
+2000000 5          0.38377  0.38377   0.38493  0.38389  0.38533     -0.00157
+        10         0.23234  0.23234   0.22979  0.23424  0.23249     -0.00015
+        15         0.18132  0.18132   0.18020  0.18281  0.18143     -0.00011
+4000000 5          0.43215  0.43215   0.43144  0.43203  0.42802      0.00413
+        10         0.25268  0.25268   0.25180  0.25323  0.25363     -0.00095
+        15         0.17628  0.17628   0.17998  0.17924  0.17710     -0.00082
 
-Done: 7711.9 seconds
+Done: 8215.8 seconds
 """
 import pandas as pd
 import numpy as np
@@ -79,7 +88,7 @@ from data_path import data_path
 params_xgb_cpu = {'objective'       : 'binary:logistic',
                   'eval_metric'     : 'logloss',
                   'tree_method'     : 'exact',
-                  'updater'         : 'grow_colmaker',
+                  # 'updater'         : 'grow_colmaker',
                   'eta'             : 0.1, #default=0.3
                   'lambda'          : 1, #default
                   'min_child_weight': 1, #default
@@ -88,7 +97,7 @@ params_xgb_cpu = {'objective'       : 'binary:logistic',
 
 params_xgb_eqbin_d = params_xgb_cpu.copy()
 params_xgb_eqbin_d.update({'tree_method': 'hist',
-                           'updater'    : 'grow_fast_histmaker',
+                           # 'updater'    : 'grow_fast_histmaker',
                            'grow_policy': 'depthwise',
                            'max_bin'    : 255,  #default=256
                        })
@@ -97,10 +106,10 @@ params_xgb_eqbin_l = params_xgb_eqbin_d.copy()
 params_xgb_eqbin_l.update({'grow_policy': 'lossguide'})
 
 params_xgb_gpu = params_xgb_cpu.copy()
-params_xgb_gpu.update({'updater': 'grow_gpu'})
+params_xgb_gpu.update({'tree_method': 'gpu_exact'})
 
 params_xgb_gpu_hist = params_xgb_cpu.copy()
-params_xgb_gpu.update({'updater' : 'grow_gpu_hist',
+params_xgb_gpu.update({'tree_method' : 'gpu_hist',
                        'max_bin' : 255,  #default=256
                    })
 
@@ -134,7 +143,7 @@ n_informative = n_redundant = n_features // 4
 n_rounds = 100
 fname_header = "exp013_"
 
-for n_train in [5*10**5, 10**6, 2*10**6, 4*10**6]:
+for n_train in [10**4, 5*10**5, 10**6, 2*10**6, 4*10**6]:
     n_valid = n_train // 4
     n_all = n_train + n_valid
     params_lgb['bin_construct_sample_cnt'] = n_train # default=50000
@@ -172,7 +181,7 @@ df_times = pd.DataFrame(times, columns=model_str_lst+['LGB']).join(pd.DataFrame(
 df_times = df_times.sort_values(keys).set_index(keys)
 for model_str in model_str_lst:
     df_times[model_str + '/LGB'] = df_times[model_str] / df_times['LGB']
-df_times.columns = pd.MultiIndex(levels=[['Time(sec)', 'Ratio'],[df_times.columns]],
+df_times.columns = pd.MultiIndex(levels=[['Time(sec)', 'Ratio'],df_times.columns.tolist()],
                                  labels=[np.repeat([0, 1], [5, 4]), range(9)])
 df_times.to_csv('log/' + fname_header + 'times.csv')
 
@@ -183,13 +192,13 @@ A, B = model_str_lst[1], "LGB"
 df_valid_scores[A + "-" + B] = df_valid_scores[A] - df_valid_scores[B]
 df_valid_scores.to_csv('log/' + fname_header + 'valid_scores.csv')
 
-pd.set_option('display.precision', 1)
-pd.set_option('display.width', 100)
+pd.set_option('precision', 1)
+pd.set_option('max_columns', 100)
 print('\n')
 print(df_times)
 
-pd.set_option('display.precision', 5)
-pd.set_option('display.width', 100)
+pd.set_option('precision', 5)
+pd.set_option('max_columns', 100)
 print('\nLogloss')
 print(df_valid_scores)
 
