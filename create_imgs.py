@@ -53,12 +53,12 @@ for n_train in [10**4, 10**5, 10**6, 10**7]:
 N = 10**4
 exp_lst = [{'header'      : 'exp013_',
             'metric'      : 'Logloss',
-            'n_train_s'   : [10**4, 5*10**5, 10**6, 2*10**6, 4*10**6],
+            'n_train_s'   : [10**4, 5*10**5, 10**6, 2*10**6],
             # 'num_leaves_s': [32, 256, 1024, 4096, 16384],
             'max_depth_s' : [5, 10, 15]},
            {'header'      : 'exp014_',
             'metric'      : 'Logloss',
-            'n_train_s'   : [N, 2*N, 4*N, 8*N, 16*N, 32*N, 64*N],
+            'n_train_s'   : [N, 2*N, 4*N, 8*N, 16*N, 32*N],
             # 'num_leaves_s':[32, 256, 1024, 4096],
             'max_depth_s' :[5, 10]}]
 
